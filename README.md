@@ -89,6 +89,65 @@ auth/
 └── tests.py     # Unit tests
 ```
 
+### Database Migrations (Django-style)
+
+This project uses Alembic for database migrations with Django-style commands for familiarity.
+
+#### `make alembic-init`
+Initialize Alembic in a fresh project (only needed once):
+
+```bash
+make alembic-init
+```
+
+This command:
+- Creates the `alembic/` directory structure
+- Generates configuration files
+- Provides next steps for setup
+
+**Note**: This project already has Alembic initialized, so you don't need to run this command unless starting fresh.
+
+#### `make makemigrations "<message>"`
+Generate a new migration based on model changes (like Django's `makemigrations`):
+
+```bash
+make makemigrations "add user table"
+```
+
+Auto-detects changes in your SQLModel models and creates a migration file.
+
+#### `make migrate [revision]`
+Apply migrations to the database (like Django's `migrate`):
+
+```bash
+# Apply all pending migrations
+make migrate
+
+# Migrate to specific revision
+make migrate abc123
+```
+
+#### `make showmigrations`
+View all migrations (like Django's `showmigrations`):
+
+```bash
+make showmigrations
+```
+
+#### `make sqlmigrate <revision>`
+Show the SQL for a specific migration (like Django's `sqlmigrate`):
+
+```bash
+make sqlmigrate abc123
+```
+
+#### `make dbshell`
+Open SQLite database shell (like Django's `dbshell`):
+
+```bash
+make dbshell
+```
+
 ## Getting Started
 
 1. Install dependencies:
@@ -96,12 +155,30 @@ auth/
 uv sync
 ```
 
-2. Start development server:
+2. Generate a secret key:
+```bash
+make secret-key
+# Copy output to .env file
+```
+
+3. Set up the database:
+```bash
+# Apply initial migrations (if any)
+make upgrade
+```
+
+4. Start development server:
 ```bash
 make dev
 ```
 
-3. Create a new app module:
+5. Create a new app module:
 ```bash
 make startapp <your_app_name>
+```
+
+6. After creating models, generate and apply migrations:
+```bash
+make makemigrations "describe your changes"
+make migrate
 ```
