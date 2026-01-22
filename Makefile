@@ -1,10 +1,13 @@
-.PHONY: dev run startapp
+.PHONY: dev run startapp secret-key
 
 dev:
 	fastapi dev main.py
 
 run:
 	fastapi run main.py
+
+secret-key:
+	@python -c "import secrets; print('SECRET_KEY=' + secrets.token_urlsafe(64))"
 
 startapp:
 	@if [ -z "$(filter-out $@,$(MAKECMDGOALS))" ]; then \

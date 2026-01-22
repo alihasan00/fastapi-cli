@@ -30,6 +30,35 @@ This command runs `fastapi run main.py`, which:
 - Optimized for performance
 - No auto-reload functionality
 
+### Configuration
+
+#### `make secret-key`
+Generates a cryptographically secure SECRET_KEY for your application.
+
+```bash
+make secret-key
+```
+
+This command:
+- Generates a 64-byte (512-bit) random key using Python's `secrets` module
+- Outputs in the format: `SECRET_KEY=<generated_key>`
+- Produces a URL-safe base64-encoded string
+- Suitable for production use in JWT tokens, session management, and encryption
+
+**Usage:**
+```bash
+# Generate a new secret key
+make secret-key
+
+# Copy the output to your .env file
+# Example output: SECRET_KEY=a1b2c3d4e5f6g7h8...
+```
+
+**Important:** 
+- Always use a unique SECRET_KEY for each environment (development, staging, production)
+- Never commit your SECRET_KEY to version control
+- Store it securely in your `.env` file
+
 ### App Scaffolding
 
 #### `make startapp <app_name>`
